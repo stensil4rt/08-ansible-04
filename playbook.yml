@@ -1,0 +1,9 @@
+
+---
+- name: Install Clickhouse, Vector, Lighthouse
+  hosts: clickhouse
+#  sudo: yes
+  tasks:
+  roles:
+    - role: AlexeySetevoi.clickhouse
+      when: ansible_host == '192.168.1.67'
