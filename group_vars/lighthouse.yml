@@ -1,0 +1,11 @@
+---
+ansible_user            : ansible
+ansible_ssh_pass        : SuperPass)
+ansible_become: yes
+ansible_become_method: sudo
+ansible_become_pass: "SuperPass)"
+
+lighthouse_path: "/usr/share/nginx/lighthouse"
+clickhouse_host: "{{ groups['clickhouse'][0] }}"
+clickhouse_user: "logger"
+clickhouse_password: "logger"

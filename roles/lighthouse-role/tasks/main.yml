@@ -1,0 +1,21 @@
+---
+# tasks file for lighthouse
+- name: 'Lighthouse -> Create {{ lighthouse_dir }}'
+  become: true
+  ansible.builtin.file:
+    path: "{{ lighthouse_dir }}"
+    state: directory
+    mode: '0777'
+- name: 'Lighthouse -> github'
+  ansible.builtin.git:
+    repo: "{{ lighthouse_git_repo }}"
+    version: master
+    dest: "{{ lighthouse_dir }}"
+  notify: Restart nginx service
+- name: 'Lighthouse -> nginx config'
+  become: true
+  ansible.builtin.template:
+    src: lighthouse.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+    mode: 0644
+  notify: Restart nginx service

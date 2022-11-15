@@ -1,0 +1,4 @@
+---
+# defaults file for lighthouse
+lighthouse_dir: "/opt/lighthouse"
+lighthouse_access_log: lighthouse_access

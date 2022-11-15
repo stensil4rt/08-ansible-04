@@ -1,9 +1,18 @@
-
 ---
-- name: Install Clickhouse, Vector, Lighthouse
+- name: Install Clickhouse
   hosts: clickhouse
-#  sudo: yes
-  tasks:
   roles:
-    - role: AlexeySetevoi.clickhouse
+    - role: clickhouse
       when: ansible_host == '192.168.1.67'
+#
+- name: Install Vector
+  hosts: vector
+  roles:
+    - role: vector-role
+      when: ansible_host == '192.168.1.242'
+#    
+- name: Install Lighthouse
+  hosts: vector
+  roles:
+    - role: lighthouse-role
+      when: ansible_host == '192.168.1.55'
