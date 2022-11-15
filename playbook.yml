@@ -12,7 +12,7 @@
       when: ansible_host == '192.168.1.242'
 #    
 - name: Install Lighthouse
-  hosts: vector
+  hosts: lighthouse
   roles:
     - role: lighthouse-role
       when: ansible_host == '192.168.1.55'
