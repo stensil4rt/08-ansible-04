@@ -1,18 +1,35 @@
 ---
 # tasks file for lighthouse
-- name: 'Lighthouse -> Create {{ lighthouse_dir }}'
+# Подготовка, pre tasks
+- name: Lighthouse -> install git
   become: true
-  ansible.builtin.file:
-    path: "{{ lighthouse_dir }}"
-    state: directory
-    mode: '0777'
-- name: 'Lighthouse -> github'
+  ansible.builtin.apt:
+    name: git
+    state: present
+# install nginx
+- name: NGINX -> install Nginx
+  become: true
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  notify: Start nginx
+- name: NGINX -> Create general config
+  become: true
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: Reload nginx
+  
+# install lighthouse
+- name: Lighthouse -> github
+  become: true
   ansible.builtin.git:
-    repo: "{{ lighthouse_git_repo }}"
+    repo: "{{ lighthouse_repo }}"
     version: master
     dest: "{{ lighthouse_dir }}"
-  notify: Restart nginx service
-- name: 'Lighthouse -> nginx config'
+  notify: Get lighthouse GIT
+- name: lighthouse -> nginx config
   become: true
   ansible.builtin.template:
     src: lighthouse.conf.j2

@@ -1,4 +1,5 @@
 ---
 # vars file for lighthouse
-lighthouse_repo: "https://github.com/VKCOM/lighthouse.git"
-lighthouse_branch: "master"
+lighthouse_repo: https://github.com/VKCOM/lighthouse.git
+lighthouse_dir: "/lighthouse"
+lighthouse_access_log: lighthouse_access

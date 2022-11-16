@@ -1,11 +1,27 @@
 ---
+# tasks file for vector
 #DEB
-- name: Vector | Download deb-distrib
-  ansible.builtin.get_url:
-    url: "https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb"
-    dest: "./vector-{{ vector_version }}.deb"
-    mode: 0644
-- name: Vector | Install deb-packages
+- name: NGINX -> Install Nginx
   become: true
   ansible.builtin.apt:
-    deb: "vector-{{ vector_version }}.deb"
+    name: nginx
+    state: present
+  notify: Start nginx
+- name: NGINX -> Create general config
+  become: true
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: Reload nginx
+#DEB
+- name: Vector -> Download deb-distrib
+  ansible.builtin.get_url:
+    url: "https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb"
+    dest: "./vector_{{ vector_version }}-1_amd64.deb"
+  notify: Download deb-distrib
+- name: Vector -> Install deb-packages
+  become: true
+  ansible.builtin.apt:
+    deb: "vector_{{ vector_version }}-1_amd64.deb"
+  notify: Install deb-distrib

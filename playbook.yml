@@ -1,18 +1,18 @@
 ---
+# Install Clickhouse
 - name: Install Clickhouse
   hosts: clickhouse
   roles:
     - role: clickhouse
-      when: ansible_host == '192.168.1.67'
-#
+
+# Install Vector
 - name: Install Vector
   hosts: vector
   roles:
     - role: vector-role
-      when: ansible_host == '192.168.1.242'
-#    
+
+# Install Lighthouse
 - name: Install Lighthouse
-  hosts: vector
+  hosts: lighthouse
   roles:
     - role: lighthouse-role
-      when: ansible_host == '192.168.1.55'

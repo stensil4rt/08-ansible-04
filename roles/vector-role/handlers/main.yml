@@ -1,2 +1,14 @@
 ---
 # handlers file for vector-role
+- name: Start nginx
+  become: true
+  command: nginx
+- name: Reload nginx
+  become: true
+  command: nginx -s reload
+- name: Start vector service
+  become: true
+  ansible.builtin.service:
+    name: vector
+    state: restarted
+    daemon_reload: true
